@@ -8,7 +8,7 @@ include('includes/dbconnection.php');
 
 <head>
 
-	<title>Room Allocation System</title>
+	<title  style="color: red;">Room Allocation System</title>
 
 	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
 	<!--
@@ -48,21 +48,24 @@ include('includes/dbconnection.php');
 									
 									</div>
 								</div>
-								<div overflow="scroll" class="col-lg-3 col-md-6 col-xs-6">
-									<select name="location" class="form-control" required>
-<option value="">Choose State</option>
+								<div class="col-lg-3 col-md-6 col-xs-6">
+									<select id=country name="location" class="form-control" required>
+<!-- <option value="">Choose State</option>
 <?php $query=mysqli_query($con,"select * from tblstate");
 while($row=mysqli_fetch_array($query))
 {
 ?>    
-<option overflow="scroll" value="<?php echo $row['StateName'];?>"><?php echo $row['StateName'];?></option>
-<?php } ?> 
+<option value="<?php echo $row['StateName'];?>"><?php echo $row['StateName'];?></option>
+<?php } ?> -->
 									</select>
 								</div>
+								<div>
+								<select id=country2 name="location2" class="form-control" required>
+								</select>
+								</div>
+								<br><br>
 								<div class="col-lg-3 col-md-6 col-xs-6">
-									<input type="text" name="pgname" class="app-select form-control" required>
-	
-								
+									<input  style="font-size:16px; font-weight:bold;" placeholder="Enter Locality/street" type="text" name="pgname" class="app-select form-control" required>
 								</div>
 								<div class="col-lg-3 col-md-6 col-xs-6">
 	<button class="primary-btn">Search Properties<span class="lnr lnr-arrow-right"></span></button>
@@ -171,6 +174,27 @@ while ($row=mysqli_fetch_array($ret)) {
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var country = ["Select State", "Andra Pradesh", "Arunachal Pradesh", "Asam", "Bihar", "Chhattisgarh", "Goa", "Gujrat","Hariyana", "Himachal Pradesh","Jhrkhand", "Karnataka", "Kerala", "Madya Pradesh", "Maharastra", "Manipur", "Meghalaya", "Mezoram", "Nagaland", "Odisa", "Panjab", "Rajastan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand","Uttar Pradesh", "West Bengal"];
+				$("#country").select2({
+				  data: country
+				});
+			});
+		</script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var country2 = ["Select District", "Thane", "Pune", "Mumbai", "Nashik", "Nagpur", "Ahemadnagar", "Solapur","Jalgaon", "Kolhapur","Aurangabad", "Nanded", "Satara", "Amravati", "Sangali", "Yavatmal", "Raigarh", "Buldhana", "Beed", "Latur", "Chandrapur", "Dhule", "Jalana", "Parbhani", "Akola", "Osmanabad", "Nandurbar","Ratnagiri", "Gondiya", "Wardha", "Bandra", "Washim", "Hingoli", "Gadchiroli", "Sindhudurg"];
+				$("#country2").select2({
+				  data: country2
+				});
+			});
+		</script>
 </body>
 
 </html>

@@ -12,12 +12,13 @@ if (strlen($_SESSION['pgasoid']==0)) {
     $vid=$_GET['viewid'];
     $ressta=$_POST['status'];
     $remark=$_POST['remark'];
- 
-    
+    $email1 = $_POST['email1'];
       
    $query=mysqli_query($con, "update  tblbookpg set Remark='$remark', Status='$ressta' where ID='$vid'");
     if ($query) {
-    $msg="Owner Remark has been updated.";
+    $msg="Booking Confirmation Email has been sent to user with email >> ".$email1;
+    mail($email1, "Room Booking Confirm", "Room Booked");
+    // $msg=$email1;
   }
   else
     {
@@ -120,8 +121,10 @@ while ($row=mysqli_fetch_array($ret)) {
   </tr>
   <tr>
 <th>Email</th>
-<td>
-<?php echo $row['Email']; ?>
+<td  name="email">
+<?php 
+$GLOBALS['email1']=$row['Email'];
+ echo $GLOBALS['email1']?>
   </td>
   </tr>
   <tr>
@@ -151,7 +154,14 @@ else
 <tr>
     <th>Remark :</th>
     <td>
-    <textarea name="remark" placeholder="remark" rows="12" cols="14" class="form-control wd-450" required="true"></textarea></td>
+    <textarea name="remark" placeholder="remark" rows="4" cols="2" class="form-control wd-450" required="true"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <th>Confirm Mail :</th>
+    <td name="email1">
+        <textarea type="hidden" name="email1" placeholder="email1" rows="1" cols="1" class="form-control wd-001" required="true"><?php echo $GLOBALS['email1'];?></textarea>
+    </td>
   </tr>
   <tr>
     <th>Status :</th>

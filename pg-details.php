@@ -6,15 +6,24 @@ if(isset($_POST['submit']))
 {
   $pid=$_GET['pid'];
 $userid=$_SESSION['pgasuid'];
+$ownerid=$_POST['ownerid'];
 $chkin=$_POST['chkin'];
 $msg=$_POST['message'];
 $booknumber=mt_rand(100000000, 999999999);
 
 $query=mysqli_query($con,"insert into tblbookpg(Userid,Pgid,CheckinDate,UserMsg,BookingNumber) values('$userid','$pid','$chkin','$msg','$booknumber') ");
+$ret = mysqli_query($con,"SELECT Email from tblowner where ID='$ownerid'");
+$row=mysqli_fetch_array($ret);
+$oe=$row['Email'];
+$oid=$_SESSION['pgasoid'];
+// echo $result['Email'];
+// $result = mysqli_query($con,"select * from tbluser "); echo $row['Email'];
+  
 if($query)
 {
-
-echo "<script>alert('Booking detail has been sent to owner.');</script>";
+// echo "<script>alert('$oe');</script>";   
+echo "<script>alert('Booking detail has been sent to Owner,After Confirmation You will get an Email of Confirmation.');</script>";
+mail($oe, "Confirm the Booking Detail","Hello, New Booking is Waiting, Please Confirm it ASAP");
 echo "<script>window.location.href='my-bookings.php'</script>"; 
 } else {
 echo "<script>alert('Something Went Wrong. Please try again.');</script>";   
@@ -111,9 +120,14 @@ while ($row=mysqli_fetch_array($ret)) {
     <th>Number of Rooms</th>
     <td><?php  echo $row['norooms'];?></td>
   </tr>                 
-<tr>
+  <tr>
     <th>Address</th>
     <td><?php  echo $row['Address'];?></td>
+  </tr>
+  <tr>
+    <th>Owner Id</th>
+    <td><?php  $GLOBALS['ownerid']=$row['OwnerID'] ;echo $GLOBALS['ownerid'];?>
+    </td>
   </tr>
  </table>
 
@@ -215,7 +229,7 @@ while ($row=mysqli_fetch_array($ret)) {
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
+        <h4 class="modal-title">Booking Detail</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
@@ -232,7 +246,9 @@ while ($row=mysqli_fetch_array($ret)) {
               <p style="font-size: 18px;color: black">Check In Date: <input type="date" class="form-control" id="chkin" name="chkin" required="true"></p>
               </div>
 
-        
+        <div class="form-group">
+              <p style="font-size: 18px;color: black"><input type="hidden" id="ownerid" name="ownerid" value="<?php echo $GLOBALS['ownerid'];?>"></p>
+              </div>
 
               <div class="form-group">
                 <textarea class="form-control" name="message" id="message" rows="1" placeholder="Enter Message" required="true"></textarea>

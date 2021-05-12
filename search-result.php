@@ -61,8 +61,10 @@ include('includes/dbconnection.php');
 				<?php
 $state=$_POST['location'];
 $pgname=$_POST['pgname'];
+$city=$_POST['location2'];
+
                     
-$ret=mysqli_query($con,"select * from tblpg where StateName='$state' and PGTitle like '%$pgname%'");
+$ret=mysqli_query($con,"select * from tblpg where StateName='$state' and CityName='$city' and Address like '%$pgname%'");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 
